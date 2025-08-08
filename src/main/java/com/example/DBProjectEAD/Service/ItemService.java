@@ -22,4 +22,25 @@ public class ItemService {
     {
         return itemRepository.findAll();
     }
+
+    public ItemModel getItemById(int id) {
+        return itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item not found: " + id));
+    }
+
+    public ItemModel updateItem(int id, ItemModel updatedItem) {
+        ItemModel existing = itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item not found: " + id));
+        existing.setItemName(updatedItem.getItemName());
+        existing.setQty(updatedItem.getQty());
+        existing.setPrice(updatedItem.getPrice());
+        return itemRepository.save(existing);
+    }
+
+    public void deleteItem(int id) {
+        if (!itemRepository.existsById(id)) {
+            throw new RuntimeException("Item not found: " + id);
+        }
+        itemRepository.deleteById(id);
+    }
 }
