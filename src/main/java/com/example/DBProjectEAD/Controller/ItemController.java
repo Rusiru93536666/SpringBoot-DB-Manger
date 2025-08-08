@@ -22,8 +22,23 @@ public class ItemController {
     }
 
     @GetMapping("/getItems")
-    public List<ItemModel> getItems(@PathVariable int id)
+    public List<ItemModel> getItems()
     {
-        return itemService.getItem(id);
+        return itemService.getItem();
+    }
+
+    @GetMapping("/{id}")
+    public ItemModel getItemById(@PathVariable int id) {
+        return itemService.getItemById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ItemModel updateItem(@PathVariable int id, @RequestBody ItemModel itemModel) {
+        return itemService.updateItem(id, itemModel);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteItem(@PathVariable int id) {
+        itemService.deleteItem(id);
     }
 }
